@@ -1,3 +1,5 @@
+// Patrick Bomm dos Santos
+
 public class Analisador {
     int i = 0;
     String alfabeto = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -12,7 +14,7 @@ public class Analisador {
         while (i < palavra.length()) {
 
             // cond parada
-            if(i >= palavra.length()){
+            if (i >= palavra.length()) {
                 break;
             }
 
@@ -20,24 +22,20 @@ public class Analisador {
             if (characterEmBranco(palavra.charAt(i)) == true) {
                 i++;
                 analiser();
-            }
-    
-            // cond parada
-            if(i >= palavra.length()){
                 break;
+
             }
+
+        
 
             // caracter não alfanumerico
             if (getNonAlphanumerics(palavra.charAt(i)) == 1) {
                 i++;
                 analiser();
-
-            }
-
-            // cond parada
-            if(i >= palavra.length()){
                 break;
+
             }
+
 
             // string aux
             if ((i + 2) < palavra.length()) {
@@ -48,13 +46,12 @@ public class Analisador {
                     System.out.println("(aux, VAR, 1)");
                     i = i + 3;
                     analiser();
+                    break;
+
                 }
             }
 
-            // cond parada
-            if(i >= palavra.length()){
-                break;
-            }
+        
 
             // equals
             if ((i + 1) < palavra.length()) {
@@ -64,18 +61,19 @@ public class Analisador {
                     System.out.println("(" + palavra.charAt(i) + palavra.charAt(i + 1) + ", ASSIGNOP, 12)");
                     i = i + 2;
                     analiser();
+                    break;
+
                 }
                 if (equals.equals("==")) {
                     System.out.println("(" + palavra.charAt(i) + palavra.charAt(i + 1) + ", EQOP, 11)");
                     i = i + 2;
                     analiser();
+                    break;
+
                 }
             }
 
-            // cond parada
-            if(i >= palavra.length()){
-                break;
-            }
+     
 
             // numeros
             if (isNumber(palavra.charAt(i)) == true) {
@@ -86,9 +84,13 @@ public class Analisador {
                         if (i + 3 < palavra.length()) {
                             i = i + 3;
                             analiser();
+                            break;
+
                         } else {
                             i = i + 2;
                             analiser();
+                            break;
+
                         }
                     }
                 }
@@ -98,19 +100,18 @@ public class Analisador {
                         System.out.println("(" + palavra.charAt(i) + palavra.charAt(i + 1) + ", NUM, 2)");
                         i = i + 2;
                         analiser();
+                        break;
 
                     } else {
                         System.out.println("(" + palavra.charAt(i) + ", NUM, 2)");
                         i++;
                         analiser();
+                        break;
+
                     }
                 }
             }
 
-            // cond parada
-            if(i >= palavra.length()){
-                break;
-            }
 
             // alfabeto
             for (int j = 0; j < alfabeto.length() - 1; j++) {
@@ -121,6 +122,7 @@ public class Analisador {
                         System.out.println("(" + palavra.charAt(i) + ", VAR, 1)");
                         i++;
                         analiser();
+                        break;
 
                     }
                 }
