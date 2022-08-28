@@ -6,8 +6,13 @@ public class Analisador {
     String palavra = "";
 
     public void mandaPalavra(String s) {
-        palavra = s;
-        analiser();
+
+        if (isNumber(s.charAt(i)) == true) {
+            System.out.println("Erro: Primeiro caracter não pode ser numero");
+        } else {
+            palavra = s;
+            analiser();
+        }
     }
 
     public void analiser() {
@@ -26,8 +31,6 @@ public class Analisador {
 
             }
 
-        
-
             // caracter não alfanumerico
             if (getNonAlphanumerics(palavra.charAt(i)) == 1) {
                 i++;
@@ -36,22 +39,32 @@ public class Analisador {
 
             }
 
-
-            // string aux
-            if ((i + 2) < palavra.length()) {
-                String aux = Character.toString(palavra.charAt(i)) + Character.toString(palavra.charAt(i + 1))
-                        + Character.toString(palavra.charAt(i + 2));
-
-                if (aux.equals("aux")) {
-                    System.out.println("(aux, VAR, 1)");
-                    i = i + 3;
+            // mais de uma letra consecutiva
+            if (i + 3 < palavra.length()) {
+                if (isLetter(palavra.charAt(i)) == true && isLetter(palavra.charAt(i + 1)) == true
+                        && isLetter(palavra.charAt(i + 2)) == true) {
+                    System.out.println(
+                            "(" + palavra.charAt(i) + palavra.charAt(i + 1) + palavra.charAt(i + 2) + ", VAR, 1)");
+                    i += 3;
                     analiser();
                     break;
-
                 }
             }
-
-        
+            if (i + 2 < palavra.length()) {
+                if (isLetter(palavra.charAt(i)) == true && isLetter(palavra.charAt(i + 1)) == true) {
+                    System.out.println("(" + palavra.charAt(i) + palavra.charAt(i + 1) + ", VAR, 1)");
+                    i += 2;
+                    analiser();
+                    break;
+                }
+            }
+            // uma só letra
+            if (isLetter(palavra.charAt(i)) == true) {
+                System.out.println("(" + palavra.charAt(i) + ", VAR, 1)");
+                i++;
+                analiser();
+                break;
+            }
 
             // equals
             if ((i + 1) < palavra.length()) {
@@ -72,8 +85,6 @@ public class Analisador {
 
                 }
             }
-
-     
 
             // numeros
             if (isNumber(palavra.charAt(i)) == true) {
@@ -112,21 +123,6 @@ public class Analisador {
                 }
             }
 
-
-            // alfabeto
-            for (int j = 0; j < alfabeto.length() - 1; j++) {
-                if (i < palavra.length()) {
-                    String a1 = Character.toString(palavra.charAt(i));
-                    String a2 = Character.toString(alfabeto.charAt(j));
-                    if (a2.equals(a1)) {
-                        System.out.println("(" + palavra.charAt(i) + ", VAR, 1)");
-                        i++;
-                        analiser();
-                        break;
-
-                    }
-                }
-            }
         }
     }
 
@@ -211,5 +207,16 @@ public class Analisador {
             return false;
         }
 
+    }
+
+    public boolean isLetter(char r) {
+        if (r == 'a' || r == 'b' || r == 'c' || r == 'd' || r == 'e' || r == 'f' || r == 'g' || r == 'h' || r == 'i'
+                || r == 'j' || r == 'k' || r == 'l' || r == 'm' || r == 'n' || r == 'o' || r == 'p' || r == 'q'
+                || r == 'r' || r == 's' || r == 't' || r == 'u' || r == 'v' || r == 'w' || r == 'x' || r == 'y'
+                || r == 'z') {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
