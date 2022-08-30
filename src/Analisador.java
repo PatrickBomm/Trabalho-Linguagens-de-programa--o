@@ -4,6 +4,7 @@ public class Analisador {
     int i = 0;
     String alfabeto = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
     String palavra = "";
+    String valido = "0123456789+-*/()<>=:abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
     public void mandaPalavra(String s) {
 
@@ -16,6 +17,23 @@ public class Analisador {
     }
 
     public void analiser() {
+
+        for(int a = 0; a < palavra.length(); a++) {
+            String palavraAux = Character.toString(palavra.charAt(a)) + Character.toString(palavra.charAt(a+1));
+            if(palavra.charAt(a) == ' ' || palavra.charAt(a) == '\r'){
+                a++;
+            }
+            if( palavraAux == ":=" || palavraAux == "==") {
+                a= a+2;
+            }
+            if(!valido.contains(palavra.charAt(a)+"")) {
+                System.out.println("Erro: Caracter invalido" + palavra.charAt(a));
+                System.exit(0);
+                break;
+            }
+           
+        }
+
         while (i < palavra.length()) {
 
             // cond parada
@@ -210,7 +228,7 @@ public class Analisador {
     }
 
     public boolean isLetter(char r) {
-        if (r == 'a' || r == 'b' || r == 'c' || r == 'd' || r == 'e' || r == 'f' || r == 'g' || r == 'h' || r == 'i'
+                if (r == 'a' || r == 'b' || r == 'c' || r == 'd' || r == 'e' || r == 'f' || r == 'g' || r == 'h' || r == 'i'
                 || r == 'j' || r == 'k' || r == 'l' || r == 'm' || r == 'n' || r == 'o' || r == 'p' || r == 'q'
                 || r == 'r' || r == 's' || r == 't' || r == 'u' || r == 'v' || r == 'w' || r == 'x' || r == 'y'
                 || r == 'z') {
