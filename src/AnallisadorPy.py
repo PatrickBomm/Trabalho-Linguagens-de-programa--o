@@ -1,4 +1,6 @@
 from tkinter import *
+import os
+import sys
 
 i = 0
 alfabeto = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -155,7 +157,7 @@ class Application:
         self.titulo.pack()
 
         self.palavraLabel = Label(self.segundoContainer,text="Palavra: ", font=self.fontePadrao)
-        self.palavraLabel.pack(side=LEFT)
+        self.palavraLabel.pack(side=TOP)
 
         self.palavra = Entry(self.segundoContainer)
         self.palavra["width"] = 30
@@ -175,27 +177,46 @@ class Application:
     def mandaPalavra(self):
         global palavra
         global numbers
+        global stringaux
+        global auxiliarPrint
         
         h = 0
         
         stringaux = self.palavra.get()
+        
+        if(len(stringaux) > 0):
+            while h < len(stringaux):
+                if stringaux[h] == " " or stringaux[h] == "\n":
+                    h += 1
+                palavra += stringaux[h] 
+                h+=1
 
-        while h < len(stringaux):
-            if stringaux[h] == " " or stringaux[h] == "\n":
-                h += 1
-            palavra += stringaux[h] 
-            h+=1
+            if len(palavra) <= 0:
+                self.mensagem["text"] =("Erro: Palavra vazia")
+                self.palavra.delete(0, END)
+                stringaux = ""
+                return
+            if palavra[0] in numbers:
+                self.mensagem["text"] =("Erro: Primeiro caracter não pode ser numero\nReinicie o programa")
+                self.palavra.delete(0, END)
+                stringaux = ""
+                return
 
-        if len(palavra) <= 0:
-            self.mensagem["text"] =("Erro: Palavra vazia")
-        if palavra[0] in numbers:
-            self.mensagem["text"] =("Erro: Primeiro caracter não pode ser numero")
+            else:
+                analiser()
+                stringaux = ""
+                auxiliarPrint += "\n\n\n\n\n\n!!!CASO QUEIRA UTILIZAR NOVAMENTE, REINICIE O PROGRAMA!!!"
+                self.mensagem["text"] = auxiliarPrint
+                return
+
+
         else:
-            analiser()
-            self.mensagem["text"] = auxiliarPrint
-
+            print("Erro: Palavra vazia")
+            self.mensagem["text"] =("Erro: Palavra vazia")
+            stringaux = ""
 
 
 root = Tk()
 Application(root)
 root.mainloop()
+stringaux = ""
